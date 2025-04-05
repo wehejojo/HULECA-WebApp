@@ -1,36 +1,38 @@
-window.onload = () => {
+window.onload = async () => {
+  const body = document.querySelector("body");
 
-  let numLogs = 0;
-  let body = document.querySelector("body");
+  try {
+    const res = await fetch("http://192.168.100.6:3001/numLog");
+    const data = await res.json();
+    const numLogs = data.numLogs;
 
-  fetch("http://192.168.100.6:3001/numLog")
-    .then(res => res.json())
-    .then(data => numLogs = data.numLogs)
-    .catch(e => console.log(`Error fetching logs: ${e}`));
+    if (numLogs < 1) {
+      const element = document.createElement("div");
+      element.classList.add("main-text");
+      element.innerHTML = `<h1>No Past Violations...</h1>`;
+      body.appendChild(element);
+    } else {
+      const logsRes = await fetch("http://192.168.100.6:3001/logs");
+      const logs = await logsRes.json();
 
-  if (numLogs <= 1) {
-    let element = document.createElement("div");
-
-    element.classList.add("main-text");
-    element.innerHTML = `
-      <h1>
-        No Past Violations...
-      </h1>
-    `;
-
-    body.append(element);
-  } else {
-    const logs = fetch("http://192.168.100.6:3001/logs")
-      .then(res => res.json())
-      .catch(e => console.log(`Error fetching logs: ${e}`));
-
-    let component = document.createElement("div");
-
-    component.classList.add("log-container");
-    component.append(
-      document.createElement("div")
-        .classList.add()
-    );
+      logs.forEach((log, index) => {
+        const container = document.createElement("div");
+        container.classList.add("container");
+        container.innerHTML = `
+          <div class="header"><p>Violation Details</p></div>
+          <div class="main">
+            <div class="content-container">
+              <div>VIOLATION #${index+1}</div>
+              <div>Date: ${log.logTime}</div>
+              <div>Location: ${log.logLocation}</div>
+            </div>
+          </div>
+          <div class="footer"><p>Click for Details</p></div>
+        `;
+        body.appendChild(container);
+      });
+    }
+  } catch (err) {
+    console.error("Error loading logs:", err);
   }
-
 };

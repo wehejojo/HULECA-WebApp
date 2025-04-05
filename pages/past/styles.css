@@ -6,7 +6,7 @@
     box-sizing: border-box;
 
     font-family: "Rowdies", sans-serif;
-    font-weight: 700;
+    font-weight: 300;
     font-style: normal;
     /* border: 1px solid #000; */
 }
@@ -16,8 +16,20 @@ body{
     height: 100vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    gap: 30px;
+}
+
+header{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+header:hover{
+    cursor: pointer;
 }
 
 .main-text{
@@ -25,4 +37,57 @@ body{
     width: 70%;
 
     text-align: center;
+}
+
+.container{
+    height: 20%;
+    width: 75%;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px gray;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: all 0.2s;
+}
+
+.container:hover{
+    scale: 1.03;
+    box-shadow: 2px 2px 3px gray;
+}
+
+.container .header, .container .footer{
+    padding: 5px;
+    text-align: left;
+    font-size: 12px;
+}
+.container .footer{
+    border-top: 1px solid #000;
+}
+.container .header{
+    border-bottom: 1px solid #000;
+}
+
+.container .main{
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main .content-container{
+    height: 70%;
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    font-size: 19px;
+
+    /* border: 1px solid #000; */
 }
