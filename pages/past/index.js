@@ -15,14 +15,14 @@ window.onload = async () => {
       const logsRes = await fetch("http://192.168.100.6:3001/logs");
       const logs = await logsRes.json();
 
-      logs.forEach((log, index) => {
+      logs.forEach(log => {
         const container = document.createElement("div");
         container.classList.add("container");
         container.innerHTML = `
           <div class="header"><p>Violation Details</p></div>
           <div class="main">
             <div class="content-container">
-              <div>VIOLATION #${index+1}</div>
+              <div>VIOLATION #${log.logID}</div>
               <div>Date: ${log.logTime}</div>
               <div>Location: ${log.logLocation}</div>
             </div>
