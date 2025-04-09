@@ -57,6 +57,10 @@ header:hover{
     box-shadow: 2px 2px 3px gray;
 }
 
+.container div {
+    pointer-events: none;
+}
+
 .container .header, .container .footer{
     padding: 5px;
     text-align: left;
@@ -90,4 +94,18 @@ header:hover{
     font-size: 19px;
 
     /* border: 1px solid #000; */
+}
+
+button{
+    font-family: "Rowdies", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+
+    border-radius: 10px;
+    height: 50px;
+    width: 100px;
+
+    padding: 4px;
+
+    text-wrap: pretty;
 }

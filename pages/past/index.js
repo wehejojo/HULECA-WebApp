@@ -19,18 +19,31 @@ window.onload = async () => {
         const container = document.createElement("div");
         container.classList.add("container");
         container.innerHTML = `
-          <div class="header"><p>Violation Details</p></div>
+          <div class="header""><p>Violation Details</p></div>
           <div class="main">
             <div class="content-container">
               <div>VIOLATION #${log.logID}</div>
               <div>Date: ${log.logTime}</div>
-              <div>Location: ${log.logLocation}</div>
             </div>
           </div>
           <div class="footer"><p>Click for Details</p></div>
         `;
+        // <div>Location: ${log.logLocation}</div>
+
+        container.addEventListener('click', () => {
+          window.location.href = `../render/index.html?logID=${encodeURIComponent(log.logID)}`;
+        });
+
         body.appendChild(container);
       });
+      const backButton = document.createElement("button");
+      backButton.innerHTML = "Back";
+
+      backButton.onclick = () => {
+        window.location.href = "../../index.html";
+      };
+
+      body.append(backButton);
     }
   } catch (err) {
     console.error("Error loading logs:", err);

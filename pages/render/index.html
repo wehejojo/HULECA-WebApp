@@ -3,9 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Violation Details</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+      font-family: "Rowdies", sans-serif;
+      font-weight: 300;
+      font-style: normal;
+
+      /* border: 1px solid #000; */
+    }
+
+    body{
+      width: 100vw;
+      height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      gap: 30px;
+    }
+
+    header{
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+    header:hover{
+      cursor: pointer;
+    }
+
+    .container{
+      height: 60%;
+      width: 80%;
+
+      text-align: center;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+    .container img{
+      width: 100%;
+      height: auto;
+    }
+    .container h2{
+      text-align: left;
+    }
+
+    button{
+      font-family: "Rowdies", sans-serif;
+      font-weight: 300;
+      font-style: normal;
+
+      border-radius: 10px;
+      height: 50px;
+      width: 100px;
+
+      padding: 4px;
+
+      text-wrap: pretty;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1 onclick="window.location.href = '../../index.html'">HULECA</h1>
+  </header>
   
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const logID = parseInt(urlParams.get("logID"));
+
+    window.onload = async () => {
+      const body = document.querySelector("body");
+      const container = document.getElementById("container");
+
+      try {
+        const logsRes = await fetch("http://192.168.100.6:3001/logs");
+        const logs = await logsRes.json();
+        const log = logs.find(item => item.logID === logID);
+        console.log(log);
+
+        const container = document.createElement("div");
+        container.classList.add("container");
+        container.innerHTML = `
+          <h1>VIOLATION #${logID}</h1>
+          <img src="http://192.168.100.6:3001${log.logImagePath}" alt="Violation Image">
+          <div>
+            <h2>Date: ${log.logTime}</h2>
+            <h2>Location: ${log.logLocation}</h2>
+          </div>
+        `;
+
+        body.append(container);
+
+        const backButton = document.createElement("button");
+        backButton.innerHTML = "Back";
+
+        backButton.onclick = () => {
+          window.location.href = "../past/past.html";
+        };
+
+        body.append(backButton);
+
+      } catch (err) {
+        console.error("Error loading logs:", err);
+      }
+    };
+  </script>
 </body>
 </html>
