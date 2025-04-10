@@ -1,5 +1,8 @@
 window.onload = async () => {
+  // window.alert("New Violation Detected!!");
+
   const body = document.querySelector("body");
+  const main = document.querySelector("main");
 
   try {
     const res = await fetch("http://192.168.100.6:3001/numLog");
@@ -34,7 +37,7 @@ window.onload = async () => {
           window.location.href = `../render/index.html?logID=${encodeURIComponent(log.logID)}`;
         });
 
-        body.appendChild(container);
+        main.appendChild(container);
       });
       const backButton = document.createElement("button");
       backButton.innerHTML = "Back";
