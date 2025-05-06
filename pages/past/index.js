@@ -18,6 +18,12 @@ window.onload = async () => {
       const logsRes = await fetch("http://192.168.100.6:3001/logs");
       const logs = await logsRes.json();
 
+      const title = document.createElement('h2');
+      title.innerHTML = "Past Violations";
+      title.classList.add("section-title");
+
+      main.append(title);
+
       logs.forEach(log => {
         const container = document.createElement("div");
         container.classList.add("container");
@@ -29,9 +35,7 @@ window.onload = async () => {
               <div>Date: ${log.logTime}</div>
             </div>
           </div>
-          <div class="footer"><p>Click for Details</p></div>
         `;
-        // <div>Location: ${log.logLocation}</div>
 
         container.addEventListener('click', () => {
           window.location.href = `../render/index.html?logID=${encodeURIComponent(log.logID)}`;

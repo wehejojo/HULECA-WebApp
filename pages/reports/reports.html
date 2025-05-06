@@ -5,81 +5,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reports</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
-
-    *{
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+  
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-
-      font-family: "Rowdies", sans-serif;
-      font-weight: 300;
-      font-style: normal;
-      /* border: 1px solid #000; */
+      font-family: "Poppins", sans-serif;
     }
-    body{
+
+    body {
       height: 100vh;
       width: 100vw;
-
+      background-color: #f9fafb;
+  
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
+      gap: 30px;
+      padding-top: 80px;
     }
-    header{
-      position: absolute;
+
+    header {
+      position: fixed;
       top: 0;
-
-      width: 100vw;
-      height: 10%;
-      background-color: white;
-      padding: 12px;
+      width: 100%;
+      height: 60px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      z-index: 100;
     }
-    header:hover{
+
+    header h1 {
+      font-size: 24px;
+      color: #4f46e5;
       cursor: pointer;
+      user-select: none;
     }
-    main{
-      /* border: 1px solid #000; */
 
+    main {
       width: 90%;
-      height: 60%;
+      max-width: 700px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      
+      align-items: center;
+      gap: 24px;
       text-align: center;
     }
-    table{
-      text-align: center;
-      padding:0.8em;
-      table-layout: fixed;
-      height: 35%;
 
+    .title {
       font-size: 20px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
     }
-    td{
-      width: 50%;
+
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      color: #1f2937;
     }
-    table tr{
-      font-weight:bold;
-    }
-    .title{
-      font-weight: 400;
+
+    h2 {
       font-size: 22px;
+      font-weight: 500;
+      color: #4b5563;
     }
-    button{
-      font-family: "Rowdies", sans-serif;
-      font-weight: 300;
-      font-style: normal;
 
-      border-radius: 10px;
-      height: 50px;
-      width: 100px;
+    h3 {
+      font-size: 18px;
+      font-weight: 400;
+      color: #6b7280;
+    }
 
-      padding: 4px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #f9fafb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      font-size: 16px;
+    }
 
-      text-wrap: pretty;
+    table td, table tr {
+      padding: 16px;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f3f4f6;
+    }
+
+    button {
+      background-color: #4f46e5;
+      color: white;
+      width: 165px;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4338ca;
     }
   </style>
 </head>
@@ -87,6 +130,13 @@
   <header>
     <h1 onclick="window.location.href = '../../index.html'">HULECA</h1>
   </header>
+  <!-- <div>
+    <label for="filter" style="font-weight: 600; color: #374151;">Filter:</label>
+    <select id="filter" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #d1d5db; margin-left: 8px;">
+      <option value="monthly">Monthly</option>
+      <option value="weekly">Weekly</option>
+    </select>
+  </div> -->
   <main>
     <div>
       <h1>REPORTS</h1>
@@ -114,6 +164,7 @@
       </tr>
     </table>
   </main>
+  <button id="downloadButton">Download Report</button>
   <script>
     window.onload = async () => {
       const body = document.querySelector("body");
@@ -138,8 +189,60 @@
       backButton.onclick = () => {
         window.location.href = "../../index.html";
       };
-
       body.append(backButton);
+
+      document.getElementById("downloadButton").addEventListener("click", async () => {
+        try {
+          const res = await fetch("http://192.168.100.6:3001/numLog");
+          const data = await res.json();
+          const csv = generateCSV(data);
+          downloadCSV(csv, "report_april_2025.csv");
+        } catch (err) {
+          console.error("Failed to download CSV:", err);
+        }
+      });
+
+    };
+
+    const generateCSV = (data) => {
+      const rows = [
+        ['Month', 'April, 2025'],
+        [],
+        ['Locations', 'Violations'],
+        [],
+        ['CAM 1', data.numLogs],
+        ['CAM 2', 0],
+        ['CAM 3', 0],
+        [],
+        [],
+        [],
+        ['CAM 1'],
+        [],
+        ['Date & Time', 'Location'],
+        ['CAM 2'],
+        [],
+        [],
+        ['Date & Time', 'Location'],
+        ['CAM 3'],
+        [],
+        [],
+        ['Date & Time', 'Location']
+      ];
+      return rows.map(row => row.join(",")).join('\n');
+    };
+
+    const downloadCSV = (csv, filename) => {
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url  = window.URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+
+      a.setAttribute('hidden', '');
+      a.setAttribute('href', url);
+      a.setAttribute('download', filename);
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     };
   </script>
 </body>
