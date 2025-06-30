@@ -23,7 +23,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 30px;
       padding-top: 80px;
     }
 
@@ -173,7 +172,7 @@
       let h22 = document.getElementById("numLog2");
 
       try {
-        const res = await fetch("http://192.168.100.6:3001/numLog");
+        const res = await fetch("http://localhost:3001/numLog");
         const data = await res.json();
         const numLogs = data.numLogs;
 
@@ -193,7 +192,7 @@
 
       document.getElementById("downloadButton").addEventListener("click", async () => {
         try {
-          const res = await fetch("http://192.168.100.6:3001/numLog");
+          const res = await fetch("http://localhost:3001/numLog");
           const data = await res.json();
           const csv = generateCSV(data);
           downloadCSV(csv, "report_april_2025.csv");

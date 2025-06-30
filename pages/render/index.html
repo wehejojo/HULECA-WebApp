@@ -117,7 +117,7 @@
       const body = document.querySelector("body");
 
       try {
-        const logsRes = await fetch("http://192.168.100.6:3001/logs");
+        const logsRes = await fetch("http://localhost:3001/logs");
         const logs = await logsRes.json();
         const log = logs.find(item => item.logID === logID);
 
@@ -125,7 +125,7 @@
         container.classList.add("container");
         container.innerHTML = `
           <h1>VIOLATION #${logID}</h1>
-          <img src="http://192.168.100.6:3001${log.logImagePath}" alt="Violation Image">
+          <img src="http://localhost:3001${log.logImagePath}" alt="Violation Image">
           <div class="details">
             <h2>Date: ${log.logTime}</h2>
             <h2>Location: ${log.logLocation}</h2>

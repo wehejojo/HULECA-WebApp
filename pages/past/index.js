@@ -5,7 +5,7 @@ window.onload = async () => {
   const main = document.querySelector("main");
 
   try {
-    const res = await fetch("http://192.168.100.6:3001/numLog");
+    const res = await fetch("http://localhost:3001/numLog");
     const data = await res.json();
     const numLogs = data.numLogs;
 
@@ -15,7 +15,7 @@ window.onload = async () => {
       element.innerHTML = `<h1>No Past Violations...</h1>`;
       body.appendChild(element);
     } else {
-      const logsRes = await fetch("http://192.168.100.6:3001/logs");
+      const logsRes = await fetch("http://localhost:3001/logs");
       const logs = await logsRes.json();
 
       const title = document.createElement('h2');

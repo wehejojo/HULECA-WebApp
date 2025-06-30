@@ -1,6 +1,6 @@
 window.onload = async () => {
   try{
-    const logsRes = await fetch("http://192.168.100.6:3001/logs");
+    const logsRes = await fetch("http://localhost:3001/logs");
     const logs = await logsRes.json();
   
     const buttons = [
