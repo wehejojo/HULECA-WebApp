@@ -1,6 +1,4 @@
 window.onload = async () => {
-  // window.alert("New Violation Detected!!");
-
   const body = document.querySelector("body");
   const main = document.querySelector("main");
 
